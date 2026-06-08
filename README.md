@@ -3,7 +3,7 @@
 **Contribution Number:** 1  
 **Student:** Mikey Voss  
 **Issue:** https://github.com/lfortran/lfortran/issues/3855  
-**Status:** Phase I, In Progress
+**Status:** Phase I Complete
 
 ---
 
