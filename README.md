@@ -3,7 +3,7 @@
 **Contribution Number:** 1  
 **Student:** Mikey Voss  
 **Issue:** https://github.com/lfortran/lfortran/issues/3855  
-**Status:** Phase II Complete
+**Status:** Phase III Complete
 
 ---
 
@@ -140,29 +140,47 @@ Using UMPIRE framework (adapted):
 
 ## Testing Strategy
 
-A compile-time error goes in `tests/errors/continue_compilation_1.f90` (reference test), not an integration test (`AGENTS.md`). Planned for Phase III:
+A compile-time error goes in `tests/errors/continue_compilation_1.f90` (reference test), not an integration test (`AGENTS.md`). Done in Phase III:
 
-- [ ] `integer, parameter :: i*2 = 1` raises the error.
-- [ ] `integer :: i*2` raises the error.
-- [ ] `character :: x*3` still compiles (no regression to the character path).
+- [x] `integer, parameter :: i*2 = 1` raises the error.
+- [x] `integer :: i*2` raises the error.
+- [x] `character :: x*3` still compiles (no regression to the character path).
+
+Both failing cases live in a new subroutine appended at the end of the file, with distinct names (`i` and `j`). The file compiles in continue-compilation mode, which recovers after each error and keeps collecting, so reusing one name would have stacked a spurious "already declared" diagnostic on top of the real one.
+
+The fix fails on `main` and passes on the branch. On `main` both cases print `1` and exit 0. On the branch each raises `semantic error: length specifier is not allowed for type 'integer'`, and the regenerated reference matches. I checked for wider impact two ways: a grep of the whole test corpus shows every other `name*N` declaration is on `CHARACTER`, the path I left untouched, and the `character2` reference test still passes.
+
+The full reference suite has two local failures unrelated to this change: a macOS linker warning about a dylib built for a newer SDK, and a `.F90` C-preprocessor macro that does not expand the way it does on the project's Linux CI. Both fail the same way on clean `main`.
 
 ---
 
 ## Implementation Notes
 
-### Week [X] Progress
+### Phase III Progress
 
-[What you built this week, challenges faced, decisions made]
+Started by syncing the fork. It was 159 commits behind `upstream/main`, and upstream had rewritten both the file I needed to edit and the test file I planned to extend, so my Phase II line numbers were stale. Synced first, rebuilt, then re-located the fix site in `src/lfortran/semantics/ast_common_visitor.h`.
 
-### Week [Y] Progress
-
-[Continue documenting as you work]
+The fix is small. The per-entity declaration loop already had an `if (is_char_type && s.m_length)` block that applies a length to `CHARACTER`, but no `else`, so a length on any other type fell through and was dropped. I added an `else if (s.m_length)` branch that raises a semantic error and throws `SemanticAbort`. It runs once per entity, so it fires with or without `parameter`.
 
 ### Code Changes
 
-- **Files modified:** [List]
-- **Key commits:** [Links to important commits]
-- **Approach decisions:** [Why you chose certain approaches]
+- **Files modified:**
+  - `src/lfortran/semantics/ast_common_visitor.h` (the fix)
+  - `tests/errors/continue_compilation_1.f90` and its two regenerated reference files (the test)
+- **Key commits:**
+  - [`5e2e366`](https://github.com/VossProject/lfortran/commit/5e2e366bb) fix: reject length specifier on non-character type
+  - [`7c29acf`](https://github.com/VossProject/lfortran/commit/7c29acf5c) test: add length specifier on non-character error cases
+- **Approach decisions:**
+  - Pointed the error at the entity location (`s.loc`), not the whole statement, so a multi-entity declaration like `integer :: a, i*2, b` underlines `i*2` instead of the entire line.
+  - Used the message `length specifier is not allowed for type 'integer'` without the kind. `AGENTS.md` says to show explicit kinds for type errors, but the kind is irrelevant here: the error is about the length syntax, not whether the type is `integer(4)` or `integer(8)`.
+
+### Challenges Faced
+
+The fork was 159 commits behind upstream, and upstream had rewritten both files I needed, so my Phase II line numbers were stale. Had to sync and re-find the fix site before writing anything.
+
+Two snags after that. My test run reported green when it had actually failed, because I passed `-j16` and the top-level runner doesn't take that flag (it's for the integration runner). The log showed the failure, the exit code didn't. The other one: the full suite failed on a macOS linker warning and a `.F90` preprocessor quirk, neither related to my change, both failing on clean `main` too. Spent a while sure I'd broken something before I actually read the diffs.
+
+**Branch:** https://github.com/VossProject/lfortran/tree/fix-issue-3855
 
 ---
 
@@ -178,22 +196,6 @@ A compile-time error goes in `tests/errors/continue_compilation_1.f90` (referenc
 - [Date]: [How you addressed it]
 
 **Status:** [Awaiting review / Iterating / Approved / Merged]
-
----
-
-## Learnings & Reflections
-
-### Technical Skills Gained
-
-[What you learned technically]
-
-### Challenges Overcome
-
-[What was hard and how you solved it]
-
-### What I'd Do Differently Next Time
-
-[Reflection on your process]
 
 ---
 
