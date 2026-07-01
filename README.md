@@ -3,7 +3,7 @@
 **Contribution Number:** 1  
 **Student:** Mikey Voss  
 **Issue:** https://github.com/lfortran/lfortran/issues/3855  
-**Status:** Phase III Complete
+**Status:** Phase IV Complete
 
 ---
 
@@ -186,16 +186,15 @@ Two snags after that. My test run reported green when it had actually failed, be
 
 ## Pull Request
 
-**PR Link:** [GitHub PR URL when submitted]
+**PR Link:** https://github.com/lfortran/lfortran/pull/12058
 
-**PR Description:** [Draft or final PR description - much of the content above can be adapted]
+**PR Description:** Made LFortran raise a semantic error when a length specifier (`i*2`) is placed on a non-character type, instead of silently dropping it and compiling the line as `i`. One-line fix in the declaration semantics, plus a regression test covering both the plain and `parameter` forms.
 
 **Maintainer Feedback:**
 
-- [Date]: [Summary of feedback received]
-- [Date]: [How you addressed it]
+- None yet. PR opened 2026-06-30, awaiting first review.
 
-**Status:** [Awaiting review / Iterating / Approved / Merged]
+**Status:** Awaiting review
 
 ---
 
