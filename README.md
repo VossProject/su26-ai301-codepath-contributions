@@ -3,7 +3,7 @@
 **Contribution Number:** 1  
 **Student:** Mikey Voss  
 **Issue:** https://github.com/lfortran/lfortran/issues/3855  
-**Status:** Phase IV Complete
+**Status:** Phase IV Complete (PR merged)
 
 ---
 
@@ -192,14 +192,14 @@ Two snags after that. My test run reported green when it had actually failed, be
 
 **Maintainer Feedback:**
 
-- None yet. PR opened 2026-06-30, awaiting first review.
+- @opixdown reviewed and left three notes: drop the `! {Error}` inline comments (the stderr already shows the error), collapse my two test cases into one (`integer :: i*2` and the `parameter` version both hit the same `else if (s.m_length)` branch, so it was the same check twice), and reword the message to `length specifier is only valid for character type`. All three were fair. Addressed them in one follow-up commit and he gave an LGTM.
+- After that `main` moved and `continue_compilation_1.f90` (the shared error-test file everyone appends to) conflicted. Merged `upstream/main` in, re-resolved, kept CI green.
+- Then it just sat, green and reviewed. Learned the hard way that a reviewer's LGTM isn't a merge, and that the "Contributor" badge next to someone's name says nothing about whether they can merge. A polite nudge on the thread moved it along.
 
-**Status:** Awaiting review
+**Status:** Merged 2026-07-04 by @opixdown (merge commit `d9405da8`).
 
 ---
 
 ## Resources Used
 
 - [LFortran issue #3855](https://github.com/lfortran/lfortran/issues/3855)
-- [Link to helpful documentation]
-- [Tutorial or Stack Overflow post that helped]
