@@ -1,3 +1,40 @@
+# Contribution 2: issue selection in progress
+
+**Contribution Number:** 2  
+**Student:** Mikey Voss  
+**Issue:** not selected yet  
+**Status:** Phase I in progress
+
+---
+
+## Selection Log
+
+Started from the July 10 refresh of the course candidate sheet: about 6,500 rows, 4,900 of them unclaimed, across 502 repos. Shortlisted around my languages (Java, Python) and interests (compiler work after the lfortran PR, AI tooling, running my own server).
+
+Vetted 11 shortlisted issues across cpython, zulip, micrometer, prettier, llvm-project, and jellyfin. For each one I read the full comment thread, checked assignees, and pulled linked pull requests from GitHub's timeline API.
+
+Ten of the eleven failed the same check: an open PR already solving the issue, most under active maintainer review. The eleventh was an unbounded cleanup meta-issue that three merged PRs had already picked over. The sheet's Claimed column only tracks our cohort, so it can't see in-flight PRs from the rest of the internet.
+
+| Repo | Issue | What it is | Why I passed |
+|------|-------|------------|--------------|
+| python/cpython | [#73065](https://github.com/python/cpython/issues/73065) | smtplib should add a Date header per RFC 5322 | open PR, approved, waiting on a core dev |
+| python/cpython | [#130821](https://github.com/python/cpython/issues/130821) | inconsistent TypeError messages from conversion dunders | main fix merged, leftovers owned by two stale open PRs |
+| zulip/zulip | [#38436](https://github.com/zulip/zulip/issues/38436) | nested bullet lists break with tab indentation | two open PRs, one in active review |
+| micrometer-metrics/micrometer | [#5066](https://github.com/micrometer-metrics/micrometer/issues/5066) | warn when an instrumented cache is not recording stats | Caffeine case merged, JCache and Hazelcast PRs parked for 1.18 |
+| llvm/llvm-project | [#205306](https://github.com/llvm/llvm-project/issues/205306) | clang assertion crash on a wide string literal to `__builtin_nanf` | open PR in review, claim contested by two others |
+| llvm/llvm-project | [#189583](https://github.com/llvm/llvm-project/issues/189583) | `computeKnownFPClass` missing `ISD::SQRT` handling | open PR in review |
+| llvm/llvm-project | [#189764](https://github.com/llvm/llvm-project/issues/189764) | nullptr deref when a profile file is missing | open two-line PR already covers it |
+| prettier/prettier | [#19528](https://github.com/prettier/prettier/issues/19528) | markdown printer inserts a stray `>` before `\>` | three open PRs racing, maintainer engaged on one |
+| jellyfin/jellyfin | [#16258](https://github.com/jellyfin/jellyfin/issues/16258) | POST /Auth/Keys returns 204 with no key in the body | open PR iterating after maintainer review |
+| jellyfin/jellyfin | [#8971](https://github.com/jellyfin/jellyfin/issues/8971) | add a playback speed property to the state APIs | open PR with three approvals |
+| jellyfin/jellyfin | [#5355](https://github.com/jellyfin/jellyfin/issues/5355) | remove unnecessary `ToList` calls | four-year meta-issue, already picked over, no bounded slice left |
+
+LLVM got ruled out on policy rather than availability. Its [AI tool policy](https://llvm.org/docs/AIToolPolicy.html) forbids using AI tools to fix good-first-issues (searching and learning with LLMs is fine), and the bot restates that on every issue with the label. This course's workflow is AI-assisted, so that label is off the table.
+
+Next: re-run selection against the low-traffic repos on the sheet (emfcamp/Website, music21, tm_devices, cartography), filtering for zero linked PRs before reading anything else. Claim, fork, and comment the same day this time.
+
+---
+
 # Contribution 1: invalid length specifier for Integer declaration
 
 **Contribution Number:** 1  
