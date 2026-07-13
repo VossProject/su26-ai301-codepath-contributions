@@ -3,11 +3,13 @@
 **Contribution Number:** 2  
 **Student:** Mikey Voss  
 **Issue:** not selected yet  
-**Status:** Phase I in progress
+**Status:** Phase I In Progress
 
 ---
 
-## Selection Log
+## Why I Chose This Issue
+
+No issue picked yet, so this section is the selection log until there is one.
 
 Started from the July 10 refresh of the course candidate sheet: about 6,500 rows, 4,900 of them unclaimed, across 502 repos. Shortlisted around my languages (Java, Python) and interests (compiler work after the lfortran PR, AI tooling, running my own server).
 
